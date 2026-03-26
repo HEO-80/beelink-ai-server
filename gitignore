@@ -1,0 +1,15 @@
+# OpenClaw config (contiene tokens y credenciales)
+openclaw.json
+.openclaw/
+
+# Variables de entorno
+.env
+*.env
+
+# Logs
+*.log
+/tmp/
+
+# OS
+.DS_Store
+Thumbs.db

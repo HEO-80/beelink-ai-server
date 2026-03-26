@@ -1,0 +1,53 @@
+version: "3.8"
+
+# Stack de monitoring opcional para el Beelink
+# Grafana en :3000 | Prometheus en :9090 | Adminer en :8080
+
+services:
+  monitoring-grafana:
+    image: grafana/grafana:latest
+    container_name: monitoring-grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  monitoring-prometheus:
+    image: prom/prometheus:latest
+    container_name: monitoring-prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  monitoring-node-exporter:
+    image: prom/node-exporter:latest
+    container_name: monitoring-node-exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+
+  db-admin:
+    image: adminer
+    container_name: db-admin
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  postgres-db:
+    image: postgres:15
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: changeme
+    restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
